@@ -1,0 +1,125 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the Dashboard!</h1>
+    
+    <h2>Products</h2>
+    <ul>
+        <% products.forEach(product => { %>
+            <li><%= product.name %> - <%= product.description %> - Category: <%= product.category.name %></li>
+        <% }); %>
+    </ul>
+
+    <h2>Categories</h2>
+    <ul>
+        <% categories.forEach(category => { %>
+            <li><%= category.name %> - <%= category.description %></li>
+        <% }); %>
+    </ul>
+
+    <a href="/insert">Add</a> <!-- Link to insert page
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body align="center">
+    <h1>Welcome to the Dashboard!</h1>
+
+
+    <h2>Categories</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (categories.length > 0) { %>
+            <% categories.forEach(category => { %>
+                <tr>
+                    <td><%= category.name %></td>
+                    <td>
+                        <form action="/deleteCategory/<%= category._id %>" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="2" style="text-align:center">No products available</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Category Name</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <tr>
+                    <td><%= product.name %></td>
+                    <td><%= product.description %></td>
+                    <td><%= product.category ? product.category.name : 'No Category' %></td>
+
+                    <td>
+                    <form action="/updateProduct/<%= product._id %>" method="get" style="display:inline;">
+                        <button type="submit">Update</button>
+                    </form>
+                    </td>
+
+                    <td>
+                        <form action="/deleteProduct/<%= product._id %>" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="4" style="text-align:center">No products available</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <br><br>
+    <a href="/insert">Go to Insert Page</a> <!-- Link to insert page -->
+</body>
+</html>
